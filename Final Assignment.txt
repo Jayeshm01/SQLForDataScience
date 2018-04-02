@@ -1,0 +1,596 @@
+Data Scientist Role Play: Profiling and Analyzing the Yelp Dataset Coursera Worksheet
+
+This is a 2-part assignment. In the first part, you are asked a series of questions that will help you profile and understand the data just like a data scientist would. For this first part of the assignment, you will be assessed both on the correctness of your findings, as well as the code you used to arrive at your answer. You will be graded on how easy your code is to read, so remember to use proper formatting and comments where necessary.
+
+In the second part of the assignment, you are asked to come up with your own inferences and analysis of the data for a particular research question you want to answer. You will be required to prepare the dataset for the analysis you choose to do. As with the first part, you will be graded, in part, on how easy your code is to read, so use proper formatting and comments to illustrate and communicate your intent as required.
+
+For both parts of this assignment, use this "worksheet." It provides all the questions you are being asked, and your job will be to transfer your answers and SQL coding where indicated into this worksheet so that your peers can review your work. You should be able to use any Text Editor (Windows Notepad, Apple TextEdit, Notepad ++, Sublime Text, etc.) to copy and paste your answers. If you are going to use Word or some other page layout application, just be careful to make sure your answers and code are lined appropriately.
+In this case, you may want to save as a PDF to ensure your formatting remains intact for you reviewer.
+
+
+
+Part 1: Yelp Dataset Profiling and Understanding
+
+1. Profile the data by finding the total number of records for each of the tables below:
+	
+i. Attribute table = SELECT Count(*)
+
+			FROM attribute
+			=10000
+ii. Business table = SELECT Count(*)
+
+			FROM business
+			=10000	
+iii. Category table = SELECT Count(*)
+
+			FROM category
+			=10000	
+iv. Checkin table = SELECT Count(*)
+
+			FROM checkin
+			=10000	
+v. elite_years table = SELECT Count(*)
+
+			FROM elite_years
+			=10000	
+vi. friend table = SELECT Count(*)
+		   FROM friend
+                    =10000
+vii. hours table = SELECT Count(*)
+
+			FROM hours
+			=10000	
+viii. photo table = SELECT Count(*)
+
+			FROM photo
+			=10000	
+ix. review table = SELECT Count(*)
+
+			FROM review
+			=10000	
+x. tip table = SELECT Count(*)
+
+			FROM tip
+			=10000	
+xi. user table = SELECT Count(*)
+
+			FROM user
+			=10000	
+	
+
+
+2. Find the total number of distinct records for the primary keys in each of the tables listed below:
+
+i. Business = SELECT DISTINCT Count (id)
+		FROM Business
+		=10000
+ii. Hours = SELECT DISTINCT Count (hours)
+		FROM hours
+		=1562
+iii. Category = SELECT DISTINCT Count (category)
+		FROM category
+		=2643
+iv. Attribute = SELECT DISTINCT Count (attribute)
+		FROM attribute
+		=1115
+v. Review = SELECT DISTINCT Count (id)
+		FROM review
+		=10000
+vi. Checkin = SELECT DISTINCT Count (count)
+		FROM checkin
+		=493
+vii. Photo = SELECT DISTINCT Count (id)
+		FROM Photo
+		=10000
+viii. Tip = Select Distinct Count (*)
+		FROM Tip
+		=537
+ix. User = Select Distinct Count (Id)
+		FROM user
+		=11
+x. Friend = Select Distinct Count (friend_id)
+		FROM friend
+		=2780
+xi. Elite_years = Select Distinct Count (year)
+		FROM elite_years
+		=10000
+
+Note: Primary Keys are denoted in the ER-Diagram with a yellow key icon.	
+
+
+
+3. Are there any columns with null values in the Users table? Indicate "yes," or "no."
+
+	Answer:NO!
+	
+	
+	SQL code used to arrive at answer: 
+select Count(*)
+from user
+where compliment_photos is null
+or compliment_writer is null
+or compliment_funny is null
+or compliment_cool is null
+or compliment_plain is null
+or compliment_note is null
+or compliment_list is null
+or compliment_cute is null
+or compliment_profile is null
+or compliment_more is null
+or compliment_hot is null
+or average_stars is null
+or fans is null
+or cool is null
+or funny is null
+or useful is null
+or yelping_since is null
+or review_count is null
+or name is null
+or id is null
+	
+	
+
+	
+4. For each table and column listed below, display the smallest (minimum), largest (maximum), and average (mean) value for the following fields:
+
+	i. Table: Review, Column: Stars                         select Min(stars),Max(Stars),Avg(Stars)
+
+								from review
+	
+		min:1		max:5		avg:3.7082
+		
+	
+	ii. Table: Business, Column: Stars			select Min(stars),Max(Stars),Avg(Stars)
+
+								from business
+	
+		min:1		max:5		avg:3.6549
+		
+	
+	iii. Table: Tip, Column: Likes				select Min(likes),Max(likes),Avg(likes)
+								
+from Tip
+	
+		min:0		max:2		avg:0.0144
+		
+	
+	iv. Table: Checkin, Column: Count			select Min(Count),Max(Count),Avg(Count)
+
+								from Checkin
+	
+		min:1		max:53		avg:1.9414
+		
+	
+	v. Table: User, Column: Review_count		select Min(Review_Count),Max(Review_Count),Avg(Review_Count)							
+	from User
+	
+		min:0		max:2000		avg:24.2995
+		
+
+
+5. List the cities with the most reviews in descending order:
+
+	SQL code used to arrive at answer:
+	select city,SUM(review_count)
+
+	from business
+
+	Group by city
+	order by SUM(review_count) DESC
+	
+	
+	Copy and Paste the Result Below:
++-----------------+-------------------+
+| city            | SUM(review_count) |
++-----------------+-------------------+
+| Las Vegas       |             82854 |
+| Phoenix         |             34503 |
+| Toronto         |             24113 |
+| Scottsdale      |             20614 |
+| Charlotte       |             12523 |
+| Henderson       |             10871 |
+| Tempe           |             10504 |
+| Pittsburgh      |              9798 |
+| Montréal        |              9448 |
+| Chandler        |              8112 |
+| Mesa            |              6875 |
+| Gilbert         |              6380 |
+| Cleveland       |              5593 |
+| Madison         |              5265 |
+| Glendale        |              4406 |
+| Mississauga     |              3814 |
+| Edinburgh       |              2792 |
+| Peoria          |              2624 |
+| North Las Vegas |              2438 |
+| Markham         |              2352 |
+| Champaign       |              2029 |
+| Stuttgart       |              1849 |
+| Surprise        |              1520 |
+| Lakewood        |              1465 |
+| Goodyear        |              1155 |
++-----------------+-------------------+
+	
+
+	
+6. Find the distribution of star ratings to the business in the following cities:
+
+i. Avon
+
+SQL code used to arrive at answer:
+Select stars AS [stars Rating] ,count(stars) AS [count]
+
+from business
+
+where city="Avon"
+
+Group by Stars
+
+
+Copy and Paste the Resulting Table Below (2 columns – star rating and count):
+
+--------------+-------+
+| stars Rating | count |
++--------------+-------+
+|          1.5 |     1 |
+|          2.5 |     2 |
+|          3.5 |     3 |
+|          4.0 |     2 |
+|          4.5 |     1 |
+|          5.0 |     1 |
++--------------+-------+
+
+
+ii. Beachwood
+
+SQL code used to arrive at answer:
+
+Select stars AS [stars Rating] ,count(stars) AS [count]
+
+from business
+
+where city="Beachwood"
+
+Group by Stars
+
+
+Copy and Paste the Resulting Table Below (2 columns – star rating and count):
+
+
++--------------+-------+
+| stars Rating | count |
++--------------+-------+
+|          2.0 |     1 |
+|          2.5 |     1 |
+|          3.0 |     2 |
+|          3.5 |     2 |
+|          4.0 |     1 |
+|          4.5 |     2 |
+|          5.0 |     5 |
++--------------+-------+
+		
+
+
+7. Find the top 3 users based on their total number of reviews:
+		
+	SQL code used to arrive at answer:
+	select id,name,(review_count)
+
+	from user
+
+	group by id
+
+	order by (review_count) DESC
+	
+		
+	Copy and Paste the Result Below:
+	+------------------------+-----------+--------------+
+	| id                     | name      | review_count |
+	+------------------------+-----------+--------------+
+	| -G7Zkl1wIWBBmD0KRy_sCw | Gerald    |         2000 |
+	| -3s52C4zL_DHRK0ULG6qtg | Sara      |         1629 |
+	| -8lbUNlXVSoXqaRRiHiSNg | Yuri      |         1339 |
+		
+
+
+8. Does posing more reviews correlate with more fans?
+
+	Please explain your findings and interpretation of the results:
+	
+	The Number of Review count does not necessarly translate to Number of fans there are users who have
+	2000 reviews yet has 253 fans while there is a user who has 609 reviews yet has 503 fans.
+
++------------------------+--------------+------+
+| id                     | review_count | fans |
++------------------------+--------------+------+
+| -9I98YbNQnLdAmcYfb324Q |          609 |  503 |
+| -8EnCioUmDygAbsYZmTeRQ |          968 |  497 |
+| --2vR0DIsmQ6WfcSzKWigw |         1153 |  311 |
+| -G7Zkl1wIWBBmD0KRy_sCw |         2000 |  253 |
+| -0IiMAZI2SsQ7VmyzJjokQ |          930 |  173 |
+| -g3XIcCb2b-BD0QBCcq2Sw |          813 |  159 |
+| -9bbDysuiWeo2VShFJJtcw |          377 |  133 |
+| -FZBTkAZEXoP7CYvRV2ZwQ |         1215 |  126 |
+| -9da1xk7zgnnfO1uTVYGkA |          862 |  124 |
+| -lh59ko3dxChBSZ9U7LfUw |          834 |  120 |
+| -B-QEUESGWHPE_889WJaeg |          861 |  115 |
+| -DmqnhW4Omr3YhmnigaqHg |          408 |  111 |
+| -cv9PPT7IHux7XUc9dOpkg |          255 |  105 |
+| -DFCC64NXgqrxlO8aLU5rg |         1039 |  104 |
+| -IgKkE8JvYNWeGu8ze4P8Q |          694 |  101 |
+| -K2Tcgh2EKX6e6HqqIrBIQ |         1246 |  101 |
+| -4viTt9UC44lWCFJwleMNQ |          307 |   96 |
+| -3i9bhfvrM3F1wsC9XIB8g |          584 |   89 |
+| -kLVfaJytOJY2-QdQoCcNQ |          842 |   85 |
+| -ePh4Prox7ZXnEBNGKyUEA |          220 |   84 |
+| -4BEUkLvHQntN6qPfKJP2w |          408 |   81 |
+| -C-l8EHSLXtZZVfUAUhsPA |          178 |   80 |
+| -dw8f7FLaUmWR7bfJ_Yf0w |          754 |   78 |
+| -8lbUNlXVSoXqaRRiHiSNg |         1339 |   76 |
+| -0zEEaDFIjABtPQni0XlHA |          161 |   73 |
++------------------------+--------------+------+
+
+	In the tables we can find more than 50% users have many reviews but don't have the corresponding fans.
+
++------------------------+--------------+------+
+| id                     | review_count | fans |
++------------------------+--------------+------+
+| -5mqBgsuzJC5mxA9HQvAyQ |            7 |   70 |
+| -J06qsoD12jmjAU75sCbjA |            6 |   69 |
+| -k0itjht__-qtuRZqUeCsQ |           16 |   64 |
+| -bzsby9X3v1wPis_GZFQlg |            6 |   63 |
+| -7DuFiNbBt_KdVdvrjIKeA |           39 |   60 |
+| -8Nu9nEluehNCYvgTAga4A |          115 |   60 |
+| -bjJvkUhEgu9P8zHOBhLug |          133 |   48 |
+| -ilwYIeZOonC_A5mNHiv2g |           42 |   46 |
+| -6UM732TQFPhKCyjsWHjNg |           54 |   45 |
+| -dccg5dCgQRh8ObtNvrj3g |           80 |   44 |
+| -G4l0J7kMhzzJjX5TxhP_w |          110 |   36 |
+| -g9HS_GVjbCgHGTd8oo-yg |          117 |   28 |
+| -Biq3Dt8YhkRJEO_ITrvww |           86 |   27 |
+| -lode4WqgRPvwTEIt7YIaw |          142 |   25 |
+| -5aaGQbMA90Cp3krCTiX0w |           87 |   23 |
+| -G9NOqqH_2V9dVPG0BiLyg |          102 |   23 |
+| -gQm-IoK2_BMEMx9OgtQnw |          137 |   23 |
+| -BlyLStEBI_Ssj1wUjE4aA |           92 |   22 |
+| -eOPMDS5pV6-f0mAn7zW7w |          136 |   22 |
+| -191lsPrknB-gE_-BzAriQ |          119 |   20 |
+| -BMnpL7J9PrDfy2GDPghvA |          145 |   19 |
+| -3Q2yDv3L8WQOIeq7mmvbA |           82 |   18 |
+| -5r7dnwWHJwgrlwvfW2tjA |           87 |   18 |
+| -0ZytDkE0eowSYqcxgvxTA |           63 |   17 |
+| -1xx5JBawGkg_-BVHXPphQ |           21 |   17 |
++------------------------+--------------+------+ 
+	
+	I have also observed that there are users who have very less review_count but have a many fans when compared, Hence the correlation factor is very weak. 
+
+
+
+	
+9. Are there more reviews with the word "love" or with the word "hate" in them?
+
+	Answer: "Love" appears more than 'hate'
+	+---------+---------+
+	| cnt_lov | cnt_hat |
+	+---------+---------+
+	|    1780 |     232 |
+	+---------+---------+
+
+	
+	SQL code used to arrive at answer:
+	select A.cnt_lov , B.cnt_hat
+
+	from
+(Select count(text) cnt_lov
+
+	from review
+
+	where text like "%love%") A,
+	
+(Select count(text) cnt_hat
+	
+from review
+	
+where text like "%hate%") B
+
+	
+	
+10. Find the top 10 users with the most fans:
+
+	SQL code used to arrive at answer:
+	select id,name,fans 
+	
+from user
+
+	ORDER bY FANS desc
+
+	LIMIT 10
+	
+	
+	Copy and Paste the Result Below:
++------------------------+-----------+------+
+| id                     | name      | fans |
++------------------------+-----------+------+
+| -9I98YbNQnLdAmcYfb324Q | Amy       |  503 |
+| -8EnCioUmDygAbsYZmTeRQ | Mimi      |  497 |
+| --2vR0DIsmQ6WfcSzKWigw | Harald    |  311 |
+| -G7Zkl1wIWBBmD0KRy_sCw | Gerald    |  253 |
+| -0IiMAZI2SsQ7VmyzJjokQ | Christine |  173 |
+| -g3XIcCb2b-BD0QBCcq2Sw | Lisa      |  159 |
+| -9bbDysuiWeo2VShFJJtcw | Cat       |  133 |
+| -FZBTkAZEXoP7CYvRV2ZwQ | William   |  126 |
+| -9da1xk7zgnnfO1uTVYGkA | Fran      |  124 |
+| -lh59ko3dxChBSZ9U7LfUw | Lissa     |  120 |
++------------------------+-----------+------+
+
+	
+	
+11. Is there a strong relationship (or correlation) between having a high number of fans and being listed as "useful" or "funny?" Out of the top 10 users with the highest number of fans, what percent are also listed as “useful” or “funny”?
+
+Key:
+0% - 25% - Low relationship
+26% - 75% - Medium relationship
+76% - 100% - Strong relationship
+	
+	SQL code used to arrive at answer:(2 Part Query)
+	PART-1(Just for understaing how got those values)
+	SELECT MAX(norm_useful) as max_use,MAX(norm_funny) as max_fun,
+	AVG(norm_funny),AVG(norm_useful),MIN(norm_funny),MIN(norm_useful)
+	from (SELECT fans,useful/fans as norm_useful,
+      	funny/fans as norm_funny, useful,funny
+      	from user)
+	
+	PART-2
+	select new_cor,count(new_cor)
+	from (select CASE
+	WHEN (fans < 125)  AND  (useful > 1308 OR funny > 1178) THEN 'LOW'
+	WHEN (fans < 125)  AND  ((useful > 436 AND useful < 1308) OR (funny > 393 AND funny > 1178)) THEN 'MEDIUM'
+	WHEN (fans < 125) AND (useful < 436 OR funny < 393) THEN 'STRONG'
+	WHEN (fans > 125 AND fans < 375)  AND  (useful > 1308 OR funny > 1178) THEN 'MEDIUM'
+	WHEN (fans > 125 AND fans < 375)  AND  ((useful > 436 AND useful < 1308) OR (funny > 393 AND funny > 436)) THEN 'STRONG'
+	WHEN (fans > 125 AND fans < 375) AND (useful < 436 OR funny < 393) THEN 'MEDIUM'
+	WHEN (fans > 375)  AND  (useful > 1308 OR funny > 1178) THEN 'STRONG'
+	WHEN (fans > 375)  AND  ((useful > 436 AND useful < 1308) OR (funny > 393 AND funny > 1178)) THEN 'MEDIUM'
+	WHEN (fans > 375) AND (useful < 436 OR funny < 393) THEN 'LOW'
+	END as new_cor
+	from user)
+	group by new_cor
+	
+	
+	
+	Copy and Paste the Result Below:
++---------+----------------+
+| new_cor | count(new_cor) |
++---------+----------------+
+| LOW     |             32 |
+| MEDIUM  |             47 |
+| STRONG  |           9921 |
++---------+----------------+
+	
+	
+	Please explain your findings and interpretation of the results:
+
+	As per my analysis Number of Fans and being useful OR funny is Strongly correlated with correlation percenatge of over 	90%
+	
+	
+	
+
+Part 2: Inferences and Analysis
+
+1. Pick one city and category of your choice and group the businesses in that city or category by their overall star rating. Compare the businesses with 2-3 stars to the businesses with 4-5 stars and answer the following questions. Include your code.
+	
+i. Do the two groups you chose to analyze have a different distribution of hours?
+
+Yes, the two groups have different Hours of operation.
+
+
+ii. Do the two groups you chose to analyze have a different number of reviews?
+
+Yes, the two groups have different review counts
+         
+         
+iii. Are you able to infer anything from the location data provided between these two groups? Explain.
+
+From the location data provided we can infer that these businesses are located in diffrent niighbourhoods.
+Based on that information we can analyze if a restaurant, if located in a specific area has higher ratings compared to any other area.
+
+SQL code used for analysis:
+select business.id , business.city , category.category,business.stars,business.name,hours.hours,business.review_count,business.latitude,business.longitude,business.neighborhood
+
+
+from business left join category 
+on business.id = category.business_id left join hours 
+on business.id = hours.business_id
+
+
+WHERE business.city LIKE 'Las vegas' AND category LIKE 'Restaurants'
+
+
+order by stars desc
+
+		
+		
+2. Group business based on the ones that are open and the ones that are closed. What differences can you find between the ones that are still open and the ones that are closed? List at least two differences and the SQL code you used to arrive at your answer.
+		
+i. Difference 1:There are more Average reviews for Open Businesses compared to a Closed business (31.75 vs 23.2)
+         
+         
+ii. Difference 2:There are more Average check-Ins in OPEN businesses comapred to Closed businesses (1.65 vs 1.25 )
+         
+         
+         
+SQL code used for analysis:
+1) 
+select AVG(review_count),
+Case
+WHEN is_open = '1' THEN 'OPEN'
+WHEN is_open = '0' THEN "CLOSED"
+END Right_Now
+
+from business
+
+Group by is_open
+
+2)
+select AVG(checkin.count),
+Case
+WHEN is_open = '1' THEN 'OPEN'
+WHEN is_open = '0' THEN "CLOSED"
+END Right_Now
+
+from business left join checkin
+on business.id = checkin.business_id
+
+Group by is_open
+
+
+	
+	
+3. For this last part of your analysis, you are going to choose the type of analysis you want to conduct on the Yelp dataset and are going to prepare the data for analysis.
+
+Ideas for analysis include: Parsing out keywords and business attributes for sentiment analysis, clustering businesses to find commonalities or anomalies between them, predicting the overall star rating for a business, predicting the number of fans a user will have, and so on. These are just a few examples to get you started, so feel free to be creative and come up with your own problem you want to solve. Provide answers, in-line, to all of the following:
+	
+i. Indicate the type of analysis you chose to do: Predicting the Star Rating of a business 
+         
+         
+ii. Write 1-2 brief paragraphs on the type of data you will need for your analysis and why you chose that data:
+
+The data required for predicting star rating for a business includes the City, Area where the business is located. I would also require any previous ratings available for the business. Number of checkins by users in the previous month, Any ameneties that the business has to offer. Number of votes for the business bu users.
+
+i would also like to have a dataset containing the data for users and their reviews for a business. what are the characterstics of users. This would help use understand the user sentiment for a business and help use to analyze how they would rate a business. 
+                           
+                  
+iii. Output of your finished dataset:
++----------------------------------+-------------------+------------------+------------------------+-------+--------------+--------------+-------+-------+
+| name                             | city              | neighborhood     | address                | stars | review_count | sum(c.count) | name  | value |
++----------------------------------+-------------------+------------------+------------------------+-------+--------------+--------------+-------+-------+
+| Cracker Barrel Old Country Store | Sheffield Village |                  | 5205 Detroit Rd        |   3.5 |           27 |          161 |  None |  None |
+| Courtyard Cleveland Willoughby   | Willoughby        |                  | 35103 Maplegrove Rd    |   3.0 |           11 |           95 |  None |  None |
+| LongHorn Steakhouse              | Mentor            |                  | 9557 Mentor Ave        |   3.5 |           21 |           95 |  None |  None |
+| John Christ Winery               | Avon Lake         |                  | 32421 Walker Rd        |   3.0 |           27 |           64 |  None |  None |
+| Chagrin Valley Little Theatre    | Chagrin Falls     |                  | 40 River St            |   4.5 |            4 |           54 |  None |  None |
+| Rite Aid                         | Cleveland         | Detroit-Shoreway | 6512 Franklin Blvd     |   2.0 |            6 |           46 |  None |  None |
+| Highland Square Tavern           | Cleveland         | Edgewater        | 11634 Madison Ave      |   2.5 |            3 |           38 |  None |  None |
+| Panda Chinese Restaurant         | Willoughby        |                  | 35535 Euclid Ave       |   3.5 |           16 |           31 |  None |  None |
+| Atlas Cinemas                    | Mentor            |                  | 9555 Diamond Centre Dr |   3.0 |            8 |           29 |  None |  None |
+| Pizza Cutter                     | Avon Lake         |                  | 33501 Lake Rd, Ste K   |   4.0 |           11 |           28 |  None |  None |
++----------------------------------+-------------------+------------------+------------------------+-------+--------------+--------------+-------+-------+
+
+
+         
+         
+iv. Provide the SQL code you used to create your final dataset:
+
+select b.name ,b.city,b.neighborhood,b.address,b.stars,b.review_count,sum(c.count),a.name,a.value
+
+from business b left join checkin c
+
+on b.id=c.business_id
+
+left join attribute a
+
+on b.id = a.business_id
+
+group by b.name ,b.city,b.neighborhood,b.address,b.stars
+
+order by sum(c.count) desc
+
